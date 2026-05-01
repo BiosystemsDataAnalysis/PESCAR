@@ -13,6 +13,8 @@ ADD ALL SOURCE R FILES!
 
 ## Installation
 
+rtools is required 
+
 You can install the development version of PESCAR from
 [GitHub](https://github.com/) with:
 
