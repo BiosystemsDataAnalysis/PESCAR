@@ -1007,7 +1007,7 @@ p1 + p2
 # Threshold the loading matrix and plot hypergraph
 
 
-```{r}
+```{r hypergraph}
 
 
 
@@ -1379,7 +1379,7 @@ dev.off()
 
 # Final figure collation
 
-```{r}
+```{r final fig collect}
 varexpdat <- var_exp_lr(Data_X, B)
 
 
