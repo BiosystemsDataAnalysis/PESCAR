@@ -217,11 +217,11 @@ B_sim_pairs <- GGally::ggpairs(
 B_sim_pairs
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/inspect-simulated-loadings-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/inspect-simulated-loadings-1.png)<!-- -->
 
 # Model options
 
-This section estimates block weights and sets the main PESCAR options.
+Estimate block weights and sets the main PESCAR options.
 
 ``` r
 dataTypes <- "GGG"
@@ -372,12 +372,12 @@ plot(result_CV$cvErrors_mat[,1],result_CV$cvErrors_mat[,5])
 lines(front[,1],front[,5])
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/quick-pareto-plot-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/quick-pareto-plot-1.png)<!-- -->
 
 # Pareto front plot
 
-This plot displays the tuning grid and the selected model. Redness
-corresponds to `lambda_x`, and greenness corresponds to `lambda_y`.
+Model selection tuning grid performance plot. Redness corresponds to
+`lambda_x`, and greenness corresponds to `lambda_y`.
 
 ``` r
 spikes <- names(spikes_from_sim(simulation))
@@ -482,7 +482,7 @@ p_front <- p_front_RV +
 p_front
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/pareto-front-plot-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/pareto-front-plot-1.png)<!-- -->
 
 # Rotate selected model
 
@@ -827,9 +827,7 @@ for(i in 1:length(columns)){
 
 # Component relationship graph
 
-This graph visualises component relationships and response association.
-This chunk keeps the original order of graph attribute assignment and
-vertex deletion.
+Component relationships and response association.
 
 ``` r
 library(igraph)
@@ -913,7 +911,7 @@ plot(
 )
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-graph-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-graph-1.png)<!-- -->
 
 ``` r
 
@@ -1000,7 +998,7 @@ p <- p + theme(
 print(p)
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-ggraph-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-ggraph-1.png)<!-- -->
 
 # Compare true and estimated scores
 
@@ -1036,7 +1034,7 @@ p2 <- ggplot(long, aes(x = sample, y = value, color = series, group = series)) +
 p1 + p2
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/compare-scores-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/compare-scores-1.png)<!-- -->
 
 # Threshold the loading matrix and plot hypergraph
 
@@ -1323,7 +1321,7 @@ ensure_region_cols <- function(df, lt_levels = NULL) {
   df
 }
 
-# use it like this (after lt_map is defined):
+
 poly_df    <- ensure_region_cols(poly_df,    lt_levels = names(lt_map))
 ellipse_df <- ensure_region_cols(ellipse_df, lt_levels = names(lt_map))
 circle_df  <- ensure_region_cols(circle_df,  lt_levels = names(lt_map))
@@ -1404,7 +1402,7 @@ hyperG_plot <- ggraph(g_ent, layout="manual", x=coords_df$x, y=coords_df$y) +
 hyperG_plot
 ```
 
-![](PESCAR_simulation_tutorial_files/figure-gfm/hypergraph-1.png)<!-- -->
+![](../vignettes/PESCAR_simulation_tutorial_files/figure-gfm/hypergraph-1.png)<!-- -->
 
 ``` r
 png("hyperG_plot_analyse_sim.png", width = 2400, height = 1800, res = 300)

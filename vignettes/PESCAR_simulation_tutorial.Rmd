@@ -212,7 +212,7 @@ B_sim_pairs
 
 # Model options
 
-This section estimates block weights and sets the main PESCAR options.
+Estimate block weights and sets the main PESCAR options.
 
 ```{r option-settings}
 dataTypes <- "GGG"
@@ -360,7 +360,7 @@ lines(front[,1],front[,5])
 
 # Pareto front plot
 
-This plot displays the tuning grid and the selected model. Redness corresponds to `lambda_x`, and greenness corresponds to `lambda_y`.
+Model selection tuning grid performance plot. Redness corresponds to `lambda_x`, and greenness corresponds to `lambda_y`.
 
 ```{r pareto-front-plot}
 spikes <- names(spikes_from_sim(simulation))
@@ -805,7 +805,7 @@ for(i in 1:length(columns)){
 
 # Component relationship graph
 
-This graph visualises component relationships and response association. This chunk keeps the original order of graph attribute assignment and vertex deletion.
+Component relationships and response association. 
 
 ```{r component-relationship-graph}
 library(igraph)
@@ -1290,7 +1290,7 @@ ensure_region_cols <- function(df, lt_levels = NULL) {
   df
 }
 
-# use it like this (after lt_map is defined):
+
 poly_df    <- ensure_region_cols(poly_df,    lt_levels = names(lt_map))
 ellipse_df <- ensure_region_cols(ellipse_df, lt_levels = names(lt_map))
 circle_df  <- ensure_region_cols(circle_df,  lt_levels = names(lt_map))
