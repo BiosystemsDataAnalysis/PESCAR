@@ -1613,21 +1613,6 @@ cvError_comput <- function(splitedData, dataTypes, alphas, ThetaHat, d) {
 
 
 
-mod_inv <- function(y_new, coefs, B){
-  
-  t_hat <- y_new %*% ginv(coefs)
-  
-  x_hat <- t_hat %*% t(B)
-  
-  M <- ginv(coefs) %*% t(B)  #calculate M_perp in cross validation?
-  
-  qr_decomp <- qr(t(M))
-  Q <- qr.Q(qr_decomp)
-  M_perp <- Q[, -(1:ncol(t(M)))] 
-  
-}
-
-
 
 pesca_FS <- function(PESCAmodel, Data, y, spikes = NULL, type = c("yasblock","PCR")){
   #used to test performance. 
@@ -1991,7 +1976,7 @@ pESCA_CV_DEV <-function(dataSets, dataTypes, y,
   
   
   # split data sets into training set and test set
-  splitedData <- dataSplit(dataSets=dataSets,       #CHANGE
+  splitedData <- PESCAR:::dataSplit(dataSets=dataSets,       #CHANGE
                            dataTypes=dataTypes,
                            y = y,
                            ratio_mis=0.1)

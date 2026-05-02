@@ -4,7 +4,7 @@
 \name{PESCAR-package}
 \alias{PESCAR}
 \alias{PESCAR-package}
-\title{PESCAR: What the Package Does (One Line, Title Case)}
+\title{PESCAR package}
 \description{
 What the package does (one paragraph).
 }

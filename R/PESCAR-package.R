@@ -16,7 +16,6 @@
 #' @import hrbrthemes
 #' @import ggplot2
 #' @import multiblock
-#' @import RpESCA
 #' @import igraph
 #' @import scales
 #' @import ggpubr

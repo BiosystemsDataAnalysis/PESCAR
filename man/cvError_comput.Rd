@@ -26,69 +26,9 @@ This function returns a vector contains CV errors
 }
 \description{
 This function will compute CV errors for a specific model
-}
-\details{
+
 This function will compute CV errors for a specific model
 }
-\section{number of data sets, size of each data set}{
-nDataSets <- length(dataSets)  # number of data sets
-n <- rep(0, nDataSets)  # number of samples
-d <- rep(0, nDataSets)  # numbers of variables in different data sets
-for (i in 1:nDataSets) {
-n\link{i} <- dim(dataSets[\link{i}])\link{1}
-d\link{i} <- dim(dataSets[\link{i}])\link{2}
-}
-n <- n\link{1}
-}
-
-\section{split data sets into training set and test set}{
-trainSets <- as.list(1:nDataSets)  # training set
-testSets <- as.list(1:nDataSets)  # test set
-indexSets <- as.list(1:nDataSets)  # index of the test set
-for (i in 1:nDataSets) {
-# index out the i-th data set
-Xi <- dataSets[\link{i}]
-dataType_Xi <- dataTypes\link{i}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{# generate the index of the test set
-full_ind_vec <- 1:(n * d[i])
-
-# if it is binary data, using hierachical sampling
-if (dataType_Xi == "B") \{
-  ones_ind_vec <- full_ind_vec[Xi == 1]
-  zeros_ind_vec <- full_ind_vec[Xi == 0]
-  index_Xi_ones <- sample(ones_ind_vec, round(ratio_mis * length(ones_ind_vec)))
-  index_Xi_zeros <- sample(zeros_ind_vec, round(ratio_mis * length(zeros_ind_vec)))
-  
-  # test the sampled samples
-  if (!(all(Xi[index_Xi_ones] == 1)) | !(all(Xi[index_Xi_zeros] == 0))) 
-    message("the hierachical sampling does not work")
-  
-  index_Xi_test <- c(index_Xi_ones, index_Xi_zeros)
-\} else \{
-  non_NaN_mat <- 1 - is.na(Xi)
-  non_NaN_ind_vec <- full_ind_vec[non_NaN_mat > 0]
-  index_Xi_test <- sample(non_NaN_ind_vec, round(ratio_mis * length(non_NaN_ind_vec)))
-\}
-
-# generate the train set
-Xi_train <- Xi
-Xi_train[index_Xi_test] <- NA
-trainSets[[i]] <- Xi_train
-
-# generate the test set
-Xi_test <- Xi[index_Xi_test]
-testSets[[i]] <- Xi_test
-indexSets[[i]] <- index_Xi_test
-}\if{html}{\out{</div>}}
-
-}
-}
-
-\section{return}{
-
-}
-
 \examples{
 \dontrun{cvError_comput(splitedData,dataTypes,alphas,ThetaHat,d)}
 \dontrun{cvError_comput(splitedData,dataTypes,alphas,ThetaHat,d)}

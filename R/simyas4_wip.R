@@ -1,40 +1,6 @@
 
 
 
-##create data (PESCA)
-
-# library(RSpectra)
-# library(matrixStats)
-# library(reshape2)
-# library(patchwork)
-# library(gridExtra)
-# library(grid)
-# library(tidyverse)
-# 
-# library(viridis)
-# library(hrbrthemes)
-# library(ggplot2)
-# 
-# library(multiblock)
-# 
-# # devtools::install_github("enorthrop/sup.r.jive")
-# # library(sup.r.jive)
-# # devtools::install_gitlab("uvabda/RpESCA")
-# library(RpESCA)
-
-
-# #path = "../../"   #for fishing rod
-# #removed "path," from below pastes - WARNING -
-# 
-# #path = "GitHub/CMOM/"
-# path="../"
-# 
-# #source(paste0(path,"Simulations/DATA_SIM_FUNCS.R"))
-# source(paste0(path,"Simulations/create_core_PE_A_SCA_clean.R"))
-# source(paste0(path,"Scripts/Roel/PESCA_redo_functions.R"))
-# source(paste0(path,"Simulations/Roel/Roel_method_functions.R"))
-# source(paste0(path,"Simulations/Roel/Roel_sim_functions.R"))
-
 numFeatures_chems = c(10,0,2,0,10)
 numFeatures_genes = c(5,0,2,0,0)
 numFeatures_bact = c(0,0,2,0,5)
