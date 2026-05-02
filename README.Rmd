@@ -18,40 +18,26 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of PESCAR is to ...
-
-ADD ALL SOURCE R FILES!
-
 ## Installation
 
-You can install the development version of PESCAR from [GitHub](https://github.com/) with:
+Install `PESCAR` from GitHub using `pak`:
 
-``` r
-# install.packages("pak")
+```{r install, eval=FALSE}
+install.packages("pak")
 pak::pak("Fred-White94/PESCAR")
 ```
 
-## Example
+Then load the package:
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r load-package, eval=FALSE}
 library(PESCAR)
-## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Getting started
 
-```{r cars}
-summary(cars)
-```
+A worked simulation tutorial is provided in the repository:
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+[Simulation tutorial](vignettes/PESCAR_simulation_tutorial.Rmd)
 
-You can also embed plots, for example:
+This tutorial introduces the basic workflow for simulating data, fitting a PESCAR model, selecting tuning parameters, and inspecting the model output.
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
