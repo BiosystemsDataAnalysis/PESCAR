@@ -34,3 +34,9 @@ tutorial](vignettes/PESCAR_simulation_tutorial.Rmd)
 This tutorial introduces the basic workflow for simulating data, fitting
 a PESCAR model, selecting tuning parameters, and inspecting the model
 output.
+
+To load a non rendered version of the tutorial in Rstudio:
+
+``` r
+file.show(system.file("PESCAR_simulation_tutorial.Rmd", package = "PESCAR"))
+```
