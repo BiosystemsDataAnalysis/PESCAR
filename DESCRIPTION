@@ -31,7 +31,8 @@ Imports:
     pracma,
     tidygraph,
     ggraph,
-    pls
+    pls,
+    ggplotify
 Suggests: 
     knitr,
     rmarkdown,
