@@ -1,28 +1,27 @@
----
-title: "PESCAR tutorial simulation"
-author: "Fred White"
-date: "`r Sys.Date()`"
-output:
-  github_document:
-    toc: true
-    toc_depth: 2
-    fig_width: 9
-    fig_height: 6
-vignette: >
-  %\VignetteIndexEntry{PESCAR tutorial simulation}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+PESCAR tutorial simulation
+================
+Fred White
+2026-05-02
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE,
-  message = FALSE,
-  warning = FALSE,
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+- [Overview](#overview)
+- [Load packages](#load-packages)
+- [Simulate data](#simulate-data)
+- [Inspect simulated loadings](#inspect-simulated-loadings)
+- [Model options](#model-options)
+- [Optional sampled subset](#optional-sampled-subset)
+- [Fit PESCAR](#fit-pescar)
+- [Select a model from the grid](#select-a-model-from-the-grid)
+- [Pareto front plot](#pareto-front-plot)
+- [Rotate selected model](#rotate-selected-model)
+- [Label components](#label-components)
+- [Loading profiles](#loading-profiles)
+- [Component relationship graph](#component-relationship-graph)
+- [Compare true and estimated
+  scores](#compare-true-and-estimated-scores)
+- [Threshold the loading matrix and plot
+  hypergraph](#threshold-the-loading-matrix-and-plot-hypergraph)
+- [Final figure collation](#final-figure-collation)
+- [Summary](#summary)
 
 # Overview
 
@@ -30,16 +29,17 @@ This tutorial demonstrates the basic use of `PESCAR` on simulated data.
 
 The example follows five steps:
 
-1. simulate three predictor blocks with known Common, Local and Distinct component structure;
-2. simulate a response variable related to selected components;
-3. fit PESCAR over a small grid of `lambda_x` and `lambda_y` values;
-4. select a model from the Pareto front;
-5. inspect the selected model with loading profiles, variance explained and component relationship plots.
-
+1.  simulate three predictor blocks with known Common, Local and
+    Distinct component structure;
+2.  simulate a response variable related to selected components;
+3.  fit PESCAR over a small grid of `lambda_x` and `lambda_y` values;
+4.  select a model from the Pareto front;
+5.  inspect the selected model with loading profiles, variance explained
+    and component relationship plots.
 
 # Load packages
 
-```{r load-packages}
+``` r
 library(scales)
 library(ggpubr)
 library(extrafont)
@@ -60,7 +60,8 @@ library(PESCAR)
 
 # Simulate data
 
-We begin by simulating the data blocks and corresponding response. The simulated data contain three predictor blocks and one response (vector).
+We begin by simulating the data blocks and corresponding response. The
+simulated data contain three predictor blocks and one response (vector).
 
 The latent structure is specified through six components:
 
@@ -68,7 +69,7 @@ The latent structure is specified through six components:
 - two Local components across two predictor blocks;
 - two Distinct components one in X1 and one in X2.
 
-```{r simulate-data}
+``` r
 Yweights <- c(0, 0, 0.5, 0.5)
 
 K <- 6
@@ -163,6 +164,11 @@ ggraph(cg1_tbl, layout = "fr") +
   scale_edge_colour_discrete(name = "Edge pattern") +
   scale_fill_discrete(name = "Blocks") +
   theme_graph()
+```
+
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/simulate-data-1.png)<!-- -->
+
+``` r
 
 simulation = PESCAR:::dataSimWrapper(Yweights = Yweights,
                               componentWeights = list(c(0.5,0.5,0.5,0.5, 0.5),
@@ -193,9 +199,10 @@ names(Data) <- c("X1","X2","X3","Y")
 
 # Inspect simulated loadings
 
-The pairwise plot below shows the simulated loading structure. Points are coloured by block.
+The pairwise plot below shows the simulated loading structure. Points
+are coloured by block.
 
-```{r inspect-simulated-loadings}
+``` r
 library(ggplotify)
 library(patchwork)
 
@@ -210,11 +217,13 @@ B_sim_pairs <- GGally::ggpairs(
 B_sim_pairs
 ```
 
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/inspect-simulated-loadings-1.png)<!-- -->
+
 # Model options
 
 This section estimates block weights and sets the main PESCAR options.
 
-```{r option-settings}
+``` r
 dataTypes <- "GGG"
 
 # concave function and its hyper-parameter
@@ -238,9 +247,10 @@ opts$alphas[4] <- mean(opts$alphas)
 
 # Optional sampled subset
 
-The following code samples observations for later prediction-oriented checks. Although this is not used here.
+The following code samples observations for later prediction-oriented
+checks. Although this is not used here.
 
-```{r sampled-subset}
+``` r
 set.seed(129)
 inds <- sample(nrow(Data[[1]]), 60)
 inds <- inds[order(inds)]
@@ -272,9 +282,11 @@ spikes_from_sim <- function(simulation){
 
 # Fit PESCAR
 
-The grid search is deliberately small so that the tutorial can be rendered reasonably quickly - for real data this might need to be larger in order to find the preferred parameters.
+The grid search is deliberately small so that the tutorial can be
+rendered reasonably quickly - for real data this might need to be larger
+in order to find the preferred parameters.
 
-```{r fit-pescar}
+``` r
 opts$R <- 6
 
 opts$rand_start <- "PLS"
@@ -312,9 +324,11 @@ result_CV <- PESCAR:::pESCA_CV_DEV(dataSets = newdata,
 
 # Select a model from the grid
 
-The model is selected from the Pareto front of the `X` and `Y` errors. If there are multiple non-dominated points, the errors are min--max scaled and the selected point is the closest to the utopia point.
+The model is selected from the Pareto front of the `X` and `Y` errors.
+If there are multiple non-dominated points, the errors are min–max
+scaled and the selected point is the closest to the utopia point.
 
-```{r select-model}
+``` r
 index_min_cv <- which.min(result_CV$cvErrors_mat[,1])
 
 d <- result_CV$cvErrors_mat
@@ -353,16 +367,19 @@ lambdas_y <- lambda_y_vals[index_min_cv]
 PESCARmod <- result_CV$TrainModel[[index_min_cv]]
 ```
 
-```{r quick-pareto-plot}
+``` r
 plot(result_CV$cvErrors_mat[,1],result_CV$cvErrors_mat[,5])
 lines(front[,1],front[,5])
 ```
 
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/quick-pareto-plot-1.png)<!-- -->
+
 # Pareto front plot
 
-This plot displays the tuning grid and the selected model. Redness corresponds to `lambda_x`, and greenness corresponds to `lambda_y`.
+This plot displays the tuning grid and the selected model. Redness
+corresponds to `lambda_x`, and greenness corresponds to `lambda_y`.
 
-```{r pareto-front-plot}
+``` r
 spikes <- names(spikes_from_sim(simulation))
 GMR <- do.call(c,lapply(result_CV$TrainModel, function(nd) PESCAR:::pesca_FS(nd, newdata, y_samp, spikes, type = "PCR")[[1]]))
 
@@ -465,11 +482,14 @@ p_front <- p_front_RV +
 p_front
 ```
 
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/pareto-front-plot-1.png)<!-- -->
+
 # Rotate selected model
 
-The selected model is rotated with varimax for easier inspection of loading profiles.
+The selected model is rotated with varimax for easier inspection of
+loading profiles.
 
-```{r rotate-selected-model}
+``` r
 B <- PESCARmod$outcome$B
 A <- PESCARmod$outcome$A
 
@@ -488,9 +508,10 @@ Coefs <- (solve(t(A)%*%A) %*% t(A) %*% y_samp)
 
 # Label components
 
-Components are labelled based on the pattern of non-zero block contributions.
+Components are labelled based on the pattern of non-zero block
+contributions.
 
-```{r label-components}
+``` r
 Sigma <- PESCARmod$outcome$varExpPCs
 
 Sigma <- Sigma[,c(2,3,4,1,5,6)]
@@ -559,9 +580,10 @@ col_info_df$group[which(is.na(col_info_df$group))] <-
 
 # Loading profiles
 
-The following plot shows the loading profiles of features most associated with the response direction.
+The following plot shows the loading profiles of features most
+associated with the response direction.
 
-```{r loading-profiles}
+``` r
 B_y_ord <- B[,order(abs(Coefs), decreasing = T)]
 A_y_ord <- A[,order(abs(Coefs), decreasing = T)]
 
@@ -805,9 +827,11 @@ for(i in 1:length(columns)){
 
 # Component relationship graph
 
-This graph visualises component relationships and response association. This chunk keeps the original order of graph attribute assignment and vertex deletion.
+This graph visualises component relationships and response association.
+This chunk keeps the original order of graph attribute assignment and
+vertex deletion.
 
-```{r component-relationship-graph}
+``` r
 library(igraph)
 library(dplyr)
 library(tidyr)
@@ -887,13 +911,18 @@ plot(
   edge.width         = abs(edge_weights),
   edge.color         = edge_colors
 )
+```
+
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-graph-1.png)<!-- -->
+
+``` r
 
 V(g)$shape <- gsub("\\d$","",names(V(g)))
 
 tg <- as_tbl_graph(g)
 ```
 
-```{r component-relationship-ggraph}
+``` r
 p <- ggraph(tg, layout = "kk") +
 
   geom_edge_link(aes(edge_width = weight, color = I(colour))) +
@@ -971,11 +1000,15 @@ p <- p + theme(
 print(p)
 ```
 
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/component-relationship-ggraph-1.png)<!-- -->
+
 # Compare true and estimated scores
 
-Because this is simulated data, the true score matrix is available. The following plot compares the true scores with the estimated rotated scores.
+Because this is simulated data, the true score matrix is available. The
+following plot compares the true scores with the estimated rotated
+scores.
 
-```{r compare-scores}
+``` r
 df <- as.data.frame(simulation[[5]], stringsAsFactors = FALSE)
 df$sample <- seq_len(nrow(df))
 
@@ -1003,11 +1036,11 @@ p2 <- ggplot(long, aes(x = sample, y = value, color = series, group = series)) +
 p1 + p2
 ```
 
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/compare-scores-1.png)<!-- -->
 
 # Threshold the loading matrix and plot hypergraph
 
-
-```{r}
+``` r
 
 
 
@@ -1369,17 +1402,21 @@ hyperG_plot <- ggraph(g_ent, layout="manual", x=coords_df$x, y=coords_df$y) +
 
 
 hyperG_plot
+```
+
+![](C:/Users/fwhite/Documents/GitHub/PESCAR/tutorials/PESCAR_simulation_tutorial_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+``` r
 png("hyperG_plot_analyse_sim.png", width = 2400, height = 1800, res = 300)
 print(hyperG_plot)
 dev.off()
-
+#> png 
+#>   2
 ```
-
-
 
 # Final figure collation
 
-```{r}
+``` r
 varexpdat <- var_exp_lr(Data_X, B)
 
 
@@ -1472,12 +1509,9 @@ gridExtra::grid.arrange(
   )
 )
 dev.off()
-
-
-
+#> png 
+#>   2
 ```
-
-
 
 # Summary
 
@@ -1486,6 +1520,9 @@ This tutorial showed the main PESCAR workflow on simulated data:
 - generate multiblock data with known CLD structure;
 - fit PESCAR across a small penalty grid;
 - select a model from the Pareto front;
-- inspect the selected model using loading profiles, variance explained and component relationship plots.
+- inspect the selected model using loading profiles, variance explained
+  and component relationship plots.
 
-For real data, the model-fitting and interpretation steps are similar, but the simulation-only comparisons with the true scores are no longer available.
+For real data, the model-fitting and interpretation steps are similar,
+but the simulation-only comparisons with the true scores are no longer
+available.

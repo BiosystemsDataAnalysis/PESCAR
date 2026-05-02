@@ -62,3 +62,48 @@ createNoise = function(n, m, mean=0, sd=1, centered=FALSE, sumsqr=0){
   
   return(E)
 }
+
+
+
+
+####PLOTTING
+
+
+# Scale theme text + any explicit geom_text/label sizes inside the plot object
+bump_plot_text <- function(p, base_size = 18, mult = 1.4) {
+  p <- p + theme(
+    text        = element_text(size = base_size),
+    axis.title  = element_text(size = base_size),
+    axis.text   = element_text(size = round(base_size * 0.9)),
+    legend.title= element_text(size = base_size),
+    legend.text = element_text(size = round(base_size * 0.9))
+  )
+  
+  for (i in seq_along(p$layers)) {
+    geom_i <- p$layers[[i]]$geom
+    is_text_geom <- inherits(geom_i, "GeomText") ||
+      inherits(geom_i, "GeomLabel") ||
+      inherits(geom_i, "GeomTextRepel") ||
+      inherits(geom_i, "GeomLabelRepel")
+    
+    if (is_text_geom) {
+      if (!is.null(p$layers[[i]]$aes_params$size)) {
+        p$layers[[i]]$aes_params$size <- p$layers[[i]]$aes_params$size * mult
+      }
+      if (!is.null(p$layers[[i]]$geom_params$size)) {
+        p$layers[[i]]$geom_params$size <- p$layers[[i]]$geom_params$size * mult
+      }
+    }
+  }
+  p
+}
+
+# helper to add a panel label (allow fontsize control)
+label_panel <- function(grob, lab, fontsize = 28) {
+  gridExtra::arrangeGrob(
+    grob,
+    top = grid::textGrob(lab, x = grid::unit(0, "npc"), just = "left",
+                         gp = grid::gpar(fontface = "bold", fontsize = fontsize))
+  )
+}
+

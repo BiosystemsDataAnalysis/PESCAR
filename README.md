@@ -24,9 +24,12 @@ library(PESCAR)
 
 ## Getting started
 
-A worked simulation tutorial is provided in the repository:
+A worked simulation tutorial is provided in:
 
-[Simulation tutorial](vignettes/PESCAR_simulation_tutorial.Rmd)
+[Rendered simulation tutorial](tutorials/PESCAR_simulation_tutorial.md)
+
+With code: [Simulation
+tutorial](vignettes/PESCAR_simulation_tutorial.Rmd)
 
 This tutorial introduces the basic workflow for simulating data, fitting
 a PESCAR model, selecting tuning parameters, and inspecting the model
