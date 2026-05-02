@@ -166,7 +166,7 @@ ggraph(cg1_tbl, layout = "fr") +
   theme_graph()
 ```
 
-![](../vignettes/figure-gfm/simulate-data-1.png)<!-- -->
+![](PESCAR/vignettes/PESCAR_simulation_tutorial_files/figure-gfm/simulate-data-1.png)<!-- -->
 
 ``` r
 
