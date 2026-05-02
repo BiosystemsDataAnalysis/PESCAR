@@ -40,6 +40,6 @@ Suggests:
     gASCA,
     Rspectra
 Remotes: 
-    url::https://gitlab.com/uvabda/RpESCA
+    gitlab::uvabda/RpESCA
 Config/testthat/edition: 3
 VignetteBuilder: knitr
