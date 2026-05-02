@@ -1,4 +1,7 @@
+#' PESCAR package
+#'
 #' @keywords internal
+#' @rawNamespace exportPattern("^[[:alpha:]]+")
 "_PACKAGE"
 
 ## usethis namespace: start
