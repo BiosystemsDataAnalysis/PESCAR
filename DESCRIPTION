@@ -32,10 +32,13 @@ Imports:
     ggraph,
     pls,
     ggplotify,
+    RpESCA,
     tidyr
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes: 
+    gitlab::uvabda/RpESCA
 Config/testthat/edition: 3
 VignetteBuilder: knitr
