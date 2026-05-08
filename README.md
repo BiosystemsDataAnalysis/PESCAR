@@ -9,32 +9,11 @@
 
 ## Installation
 
-# Windows
-
 Install `PESCAR` from GitHub using `pak`:
 
 ``` r
 install.packages("pak")
 pak::pak("Fred-White94/PESCAR")
-```
-
-# Linux / Mac
-
-``` r
-# Installation
-options(repos = c(CRAN = "https://cloud.r-project.org"))
-install.packages("remotes")
-
-# Install non-CRAN dependency
-remotes::install_gitlab("uvabda/RpESCA", upgrade = "never")
-
-# Install PESCAR
-remotes::install_github(
-  "Fred-White94/PESCAR",
-  dependencies = TRUE,
-  upgrade = "never",
-  build_vignettes = FALSE
-)
 ```
 
 Then load the package:
