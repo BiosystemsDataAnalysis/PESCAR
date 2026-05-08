@@ -3,7 +3,7 @@ Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
     person("Fred", "White", , "f.t.g.white@uva.nl", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Supervised data fusion with common, local and distinct components
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
